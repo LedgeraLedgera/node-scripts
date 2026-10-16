@@ -18,14 +18,14 @@
     <text x="62" y="176" fill="#f2f2f2" font-size="46" font-weight="700">node-scripts</text>
     <text x="64" y="214" fill="#9a9aa0" font-size="16">one command from bare server to synced node</text>
     <g font-size="13" fill="#c9c9cc">
-      <rect x="64" y="244" width="76" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
-      <text x="78" y="262">nibiru</text>
-      <rect x="150" y="244" width="104" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
-      <text x="164" y="262">dymension</text>
-      <rect x="264" y="244" width="60" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
-      <text x="278" y="262">lava</text>
-      <rect x="334" y="244" width="140" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
-      <text x="348" y="262">celestia-mocha</text>
+      <rect x="64" y="244" width="140" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
+      <text x="78" y="262">celestia-mocha</text>
+      <rect x="214" y="244" width="76" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
+      <text x="228" y="262">nibiru</text>
+      <rect x="300" y="244" width="104" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
+      <text x="314" y="262">dymension</text>
+      <rect x="414" y="244" width="60" height="26" rx="4" fill="none" stroke="#3a3a3f"/>
+      <text x="428" y="262">lava</text>
     </g>
   </g>
 
@@ -36,13 +36,13 @@
     <circle cx="38" cy="18" r="5" fill="#3a3a3f"/>
     <circle cx="56" cy="18" r="5" fill="#3a3a3f"/>
     <line x1="0" y1="36" x2="540" y2="36" stroke="#1f1f22"/>
-    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" xml:space="preserve">
-      <text x="22" y="66" fill="#f2f2f2"><tspan fill="#6f6f75">$</tspan> ./install.sh nibiru --moniker ledgera</text>
-      <text x="22" y="94" fill="#f2f2f2"><tspan fill="#7bd88f">==&gt;</tspan> Nibiru · cataclysm-1</text>
-      <text x="22" y="116" fill="#9a9aa0">    network is running v2.21.0</text>
-      <text x="22" y="138" fill="#9a9aa0">    sha256 verified</text>
-      <text x="22" y="160" fill="#9a9aa0">    state sync · ports 27xxx</text>
-      <text x="22" y="188" fill="#f2f2f2"><tspan fill="#7bd88f">==&gt;</tspan> done · service nibid active</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">
+      <text x="22" y="66" fill="#f2f2f2"><tspan fill="#6f6f75">$</tspan> bash install.sh celestia-mocha --moniker ledgera</text>
+      <text x="22" y="94" fill="#f2f2f2"><tspan fill="#7bd88f">==&gt;</tspan> Celestia Mocha · mocha-5</text>
+      <text x="56" y="116" fill="#9a9aa0">network is running v10.4.0-mocha</text>
+      <text x="56" y="138" fill="#9a9aa0">sha256 verified · BBR enabled</text>
+      <text x="56" y="160" fill="#9a9aa0">state sync · ports 26xxx</text>
+      <text x="22" y="188" fill="#f2f2f2"><tspan fill="#7bd88f">==&gt;</tspan> done · service celestia-appd active</text>
       <rect x="22" y="200" width="9" height="16" fill="#f2f2f2" opacity="0.8"/>
     </g>
   </g>
