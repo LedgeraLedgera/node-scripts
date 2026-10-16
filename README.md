@@ -11,7 +11,7 @@
 
 ```bash
 git clone https://github.com/LedgeraLedgera/node-scripts && cd node-scripts
-bash install.sh nibiru --moniker my-node
+bash install.sh celestia-mocha --moniker my-node
 ```
 
 The installer asks the network which version it is running right now, downloads that official release binary, checks its sha256, writes the config and starts the node with state sync. No compiling and no Go toolchain, and nothing is hard-coded to a version that has since gone stale.
@@ -92,3 +92,4 @@ To add a network, add a `networks/<name>.env` with the same fields and an `asset
   <a href="https://proledgera.com/transparency/">transparency</a> ·
   <a href="https://github.com/LedgeraLedgera">github</a>
 </p>
+
