@@ -61,6 +61,21 @@ bash tools/remove.sh   <network> [--purge]     # remove service + binary; --purg
 
 `status.sh` warns when your binary differs from what the network runs, which is usually the first sign of an upcoming upgrade.
 
+## Fibre (Celestia validators)
+
+[Fibre](https://github.com/celestiaorg/celestia-app/tree/main/fibre) is Celestia's data availability server, run by validators from app version 10. `fibre.sh` installs it next to a `celestia-mocha` node set up by `install.sh`:
+
+```bash
+bash fibre.sh install            # --port 7980, --home <dir> on a separate disk recommended
+bash fibre.sh status             # service, version vs node, port, on-chain registration
+bash fibre.sh upgrade            # match fibre to the node's version after a node upgrade
+bash fibre.sh remove [--purge]
+```
+
+Before it touches anything, `install` checks that the node is synced, on app version 10 or later, has app gRPC enabled and is bonded (it warns if it is not). It enables the node's privval gRPC endpoint (`127.0.0.1:26669`) if needed, downloads the `fibre` binary from the same release as the node and verifies its checksum. Then it starts fibre under systemd, wired to the node's gRPC and signer.
+
+Registering the host on-chain signs a transaction with your validator key, so the script does not do it for you. It prints the exact `tx valaddr set-host` command for you to run once port `7980` is open. Fibre's defaults assume a 32 GB host; see the [operator guide](https://github.com/celestiaorg/celestia-app/blob/main/fibre/cmd/README.md) for tuning and remote-signer setups.
+
 ## Requirements
 
 - Ubuntu 24.04 or Debian 12, amd64 or arm64. Celestia v10 builds need glibc ≥ 2.38, so Ubuntu 22.04 will not work for `celestia-mocha`.
@@ -71,6 +86,7 @@ bash tools/remove.sh   <network> [--purge]     # remove service + binary; --purg
 
 ```text
 install.sh              entry point
+fibre.sh                Fibre server for Celestia validators
 lib/common.sh           shared steps: checks, download + verify, config, state sync, systemd
 networks/<name>.env     everything network-specific: chain id, repo, genesis, seeds, RPCs, asset names
 tools/                  status · upgrade · remove
@@ -81,7 +97,7 @@ To add a network, add a `networks/<name>.env` with the same fields and an `asset
 ## Notes
 
 - **Validators:** the scripts set up a full node. Create the validator from your wallet only after `status.sh` shows `synced`, and back up `config/priv_validator_key.json` first. Never run the same key on two machines.
-- **Celestia:** the installer turns on BBR congestion control, which `celestia-app` requires. It installs the standalone build, which is enough for a node joining at the current app version. Fibre (v10+) and bridge or light nodes are out of scope.
+- **Celestia:** the installer turns on BBR congestion control, which `celestia-app` requires. It installs the standalone build, which is enough for a node joining at the current app version. Fibre is covered by `fibre.sh`; bridge and light nodes are out of scope.
 - **Not covered:** Starknet and Ethereum run on different client stacks and are not part of these scripts.
 - **State sync** depends on public RPCs serving snapshots. If it stalls, reinstall with `--snapshot <url>` from a provider you trust.
 
@@ -92,4 +108,3 @@ To add a network, add a `networks/<name>.env` with the same fields and an `asset
   <a href="https://proledgera.com/transparency/">transparency</a> ·
   <a href="https://github.com/LedgeraLedgera">github</a>
 </p>
-
