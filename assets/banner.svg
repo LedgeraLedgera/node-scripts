@@ -49,7 +49,7 @@
     <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">
       <text x="22" y="70" fill="#f0f0f0"><tspan fill="#7a7a7a">$</tspan> bash install.sh celestia-mocha --moniker ledgera</text>
       <text x="22" y="98" fill="#f0f0f0"><tspan fill="#a8a8a8">==&gt;</tspan> Celestia Mocha · mocha-5</text>
-      <text x="56" y="120" fill="#a0a0a0">network is running v10.4.0-mocha</text>
+      <text x="56" y="120" fill="#a0a0a0">network is running v10.5.0-mocha</text>
       <text x="56" y="142" fill="#a0a0a0">sha256 verified · BBR enabled</text>
       <text x="56" y="164" fill="#a0a0a0">state sync · ports 26xxx</text>
       <text x="22" y="192" fill="#f0f0f0"><tspan fill="#a8a8a8">==&gt;</tspan> done · service celestia-appd active</text>
