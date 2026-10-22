@@ -118,23 +118,40 @@ install_deps() {
 
 # ---------------------------------------------------------------- RPC helpers
 
-# First RPC from RPC_SERVERS that answers /status for the right chain.
+# Succeeds if the RPC is on $CHAIN_ID, not catching up, and its latest block
+# is under 5 minutes old. Public endpoints behind load balancers sometimes
+# answer from a lagging or empty backend; those must not be used.
+rpc_fresh() {
+  local st t age
+  st=$(curl -fsS -m 10 "$1/status" 2>/dev/null) || return 1
+  jq -e --arg id "$CHAIN_ID" \
+    '.result.node_info.network == $id and .result.sync_info.catching_up == false' \
+    >/dev/null 2>&1 <<<"$st" || return 1
+  t=$(jq -r '.result.sync_info.latest_block_time' <<<"$st")
+  t="${t%%.*}"; t="${t%Z}Z"
+  age=$(( $(date +%s) - $(date -d "$t" +%s 2>/dev/null || echo 0) ))
+  (( age < 300 ))
+}
+
+# First fresh RPC from RPC_SERVERS.
 pick_rpc() {
-  local rpc net
+  local rpc
   for rpc in "${RPC_SERVERS[@]}"; do
-    net=$(curl -fsS -m 10 "$rpc/status" 2>/dev/null | jq -r '.result.node_info.network' 2>/dev/null) || continue
-    if [[ "$net" == "$CHAIN_ID" ]]; then echo "$rpc"; return 0; fi
+    if rpc_fresh "$rpc"; then echo "$rpc"; return 0; fi
   done
   return 1
 }
 
 # Version the network is running right now, as a release tag (v1.2.3).
+# Some RPCs report "unknown", so try each fresh one until one answers.
 network_version() {
   local rpc ver
-  rpc=$(pick_rpc) || return 1
-  ver=$(curl -fsS -m 10 "$rpc/abci_info" | jq -r '.result.response.version // empty')
-  [[ -n "$ver" && "$ver" != "unknown" ]] || return 1
-  echo "v${ver#v}"
+  for rpc in "${RPC_SERVERS[@]}"; do
+    rpc_fresh "$rpc" || continue
+    ver=$(curl -fsS -m 10 "$rpc/abci_info" 2>/dev/null | jq -r '.result.response.version // empty' 2>/dev/null) || continue
+    if [[ -n "$ver" && "$ver" != "unknown" ]]; then echo "v${ver#v}"; return 0; fi
+  done
+  return 1
 }
 
 # ---------------------------------------------------------------- binary
@@ -235,13 +252,13 @@ configure_statesync() {
   local cfg="$NODE_HOME/config/config.toml" rpc latest height hash servers=()
   local r
   for r in "${RPC_SERVERS[@]}"; do
-    curl -fsS -m 10 "$r/status" >/dev/null 2>&1 || continue
+    rpc_fresh "$r" || continue
     if [[ ! "$r" =~ :[0-9]+$ ]]; then
       if [[ "$r" == https://* ]]; then r="$r:443"; else r="$r:80"; fi
     fi
     servers+=("$r")
   done
-  (( ${#servers[@]} >= 2 )) || die "state sync needs 2 reachable RPCs — use --snapshot <url> instead"
+  (( ${#servers[@]} >= 2 )) || die "state sync needs 2 synced public RPCs — use --snapshot <url> instead"
 
   rpc="${servers[0]}"
   latest=$(curl -fsS "$rpc/block" | jq -r '.result.block.header.height')
