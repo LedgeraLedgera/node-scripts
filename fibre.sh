@@ -245,9 +245,9 @@ cmd_status() {
 
   local recent
   recent=$(journalctl -u "$FIBRE_SERVICE" -n 300 --no-pager -o cat 2>/dev/null \
-    | grep -E 'storage budget is 0|level=(ERROR|WARN)|error' | tail -n 3)
+    | grep -E 'server not ready|health check failed|storage budget is 0|level=(ERROR|WARN)|error' | tail -n 3)
   if [[ -n "$recent" ]]; then
-    warn "recent warnings in the fibre log:"
+    warn "recent warnings in the fibre log (a failed health check names the cause, e.g. check=registration):"
     sed 's/^/    /' <<<"$recent" >&2
   fi
 }
