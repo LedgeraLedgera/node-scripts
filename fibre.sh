@@ -273,7 +273,7 @@ cmd_upgrade() {
   $SUDO systemctl stop "$FIBRE_SERVICE"
   $SUDO mv "$BIN_DIR/fibre.new" "$BIN_DIR/fibre"
   $SUDO systemctl start "$FIBRE_SERVICE"
-  info "running fibre $(fibre_version)"
+  info "running fibre $(fibre_version) — check readiness with: bash fibre.sh status"
   info "new config fields are not added automatically — preview with:"
   info "  $NODE_BINARY config sync --fibre-home <fibre home> --dry-run"
 }
