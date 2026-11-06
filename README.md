@@ -74,6 +74,16 @@ bash fibre.sh remove [--purge]
 
 Before it touches anything, `install` checks that the node is synced, on app version 10 or later, has app gRPC enabled and is bonded (it warns if it is not). It enables the node's privval gRPC endpoint (`127.0.0.1:26669`) if needed, downloads the `fibre` binary from the same release as the node and verifies its checksum. Then it starts fibre under systemd, wired to the node's gRPC and signer.
 
+**Upgrading a Celestia validator.** Fibre's version must match the node's, so upgrade the node first, then Fibre:
+
+```bash
+bash tools/upgrade.sh celestia-mocha     # node: swaps celestia-appd for the version the network runs
+bash fibre.sh upgrade                    # fibre: follows the node's new version
+bash fibre.sh status                     # node synced and signing, fibre ready
+```
+
+Minor releases such as `v10.6.0-mocha` need no coordinated height and no config changes. For a coordinated upgrade, pass the tag explicitly: `bash tools/upgrade.sh celestia-mocha <tag>`.
+
 Registering the host on-chain signs a transaction with your validator key, so the script does not do it for you. It prints the exact `tx valaddr set-host` command for you to run once port `7980` is open. Fibre's defaults assume a 32 GB host; see the [operator guide](https://github.com/celestiaorg/celestia-app/blob/main/fibre/cmd/README.md) for tuning and remote-signer setups.
 
 ## Requirements
@@ -108,3 +118,4 @@ To add a network, add a `networks/<name>.env` with the same fields and an `asset
   <a href="https://proledgera.com/transparency/">transparency</a> ·
   <a href="https://github.com/LedgeraLedgera">github</a>
 </p>
+
