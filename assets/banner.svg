@@ -26,14 +26,14 @@
     <text x="64" y="208" fill="#2a2a2a" font-size="14" font-weight="500" letter-spacing="4.5">BARE SERVER → SYNCED NODE</text>
   </g>
   <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1a1a1a">
-    <rect x="64" y="240" width="140" height="28" rx="14" fill="none" stroke="#1a1a1a"/>
-    <text x="80" y="259">celestia-mocha</text>
-    <rect x="214" y="240" width="76" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
-    <text x="230" y="259">nibiru</text>
-    <rect x="300" y="240" width="104" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
-    <text x="316" y="259">dymension</text>
-    <rect x="414" y="240" width="60" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
-    <text x="430" y="259">lava</text>
+    <rect x="64" y="240" width="94" height="28" rx="14" fill="none" stroke="#1a1a1a"/>
+    <text x="80" y="259">celestia</text>
+    <rect x="168" y="240" width="76" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
+    <text x="184" y="259">nibiru</text>
+    <rect x="254" y="240" width="104" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
+    <text x="270" y="259">dymension</text>
+    <rect x="368" y="240" width="60" height="28" rx="14" fill="none" stroke="#8a8a8a"/>
+    <text x="384" y="259">lava</text>
   </g>
 
   <!-- right: terminal as a black unit, like the validator box -->
